@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: simbrella-db
+    environment:
+      POSTGRES_USER: simbrella
+      POSTGRES_PASSWORD: simbrella123
+      POSTGRES_DB: simbrella_vault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
