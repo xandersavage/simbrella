@@ -141,6 +141,17 @@ exports.Prisma.WalletScalarFieldEnum = {
   currency: 'currency',
   isActive: 'isActive',
   userId: 'userId',
+  serviceId: 'serviceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ServiceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  description: 'description',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -212,6 +223,14 @@ exports.WalletType = exports.$Enums.WalletType = {
   SAVINGS: 'SAVINGS'
 };
 
+exports.ServiceType = exports.$Enums.ServiceType = {
+  AIRTIME: 'AIRTIME',
+  DATA: 'DATA',
+  ELECTRICITY: 'ELECTRICITY',
+  WATER: 'WATER',
+  CABLE_TV: 'CABLE_TV'
+};
+
 exports.TransactionType = exports.$Enums.TransactionType = {
   WALLET_TRANSFER: 'WALLET_TRANSFER',
   WALLET_FUNDING: 'WALLET_FUNDING',
@@ -226,17 +245,10 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   REVERSED: 'REVERSED'
 };
 
-exports.ServiceType = exports.$Enums.ServiceType = {
-  AIRTIME: 'AIRTIME',
-  DATA: 'DATA',
-  ELECTRICITY: 'ELECTRICITY',
-  WATER: 'WATER',
-  CABLE_TV: 'CABLE_TV'
-};
-
 exports.Prisma.ModelName = {
   User: 'User',
   Wallet: 'Wallet',
+  Service: 'Service',
   Transaction: 'Transaction',
   Log: 'Log'
 };
