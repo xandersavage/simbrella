@@ -5,6 +5,7 @@ import {
   createService,
   getServiceById,
   getAllActiveServices,
+  createServiceSystemWallet,
 } from "../services/serviceManagement";
 import { log } from "../utils/logger";
 import { ValidationError } from "../utils/validation";
@@ -91,11 +92,70 @@ export async function listServicesController(req: Request, res: Response) {
   } catch (error: any) {
     // 3. Handle errors.
     log.error("Service listing error occurred:", error);
-    res
-      .status(500)
-      .json({
-        message: "An unexpected error occurred during service retrieval.",
+    res.status(500).json({
+      message: "An unexpected error occurred during service retrieval.",
+    });
+    return;
+  }
+}
+
+export async function createServiceSystemWalletController(
+  req: Request,
+  res: Response
+) {
+  try {
+    // 1. Extract the service ID from request parameters.
+    const { serviceId } = req.params;
+
+    // 2. Extract optional data from the request body.
+    const { currency, initialBalance } = req.body || {};
+
+    // Basic validation for serviceId presence/type at controller level
+    if (
+      !serviceId ||
+      typeof serviceId !== "string" ||
+      serviceId.trim().length === 0
+    ) {
+      log.warn(
+        "System wallet creation failed: Missing or invalid serviceId in parameters."
+      );
+      res.status(400).json({
+        message: "Service ID must be a non-empty string in the URL path.",
       });
+      return;
+    }
+
+    // 3. Call the createServiceSystemWallet function from your serviceManagementService.
+    const newSystemWallet = await createServiceSystemWallet(
+      serviceId,
+      currency,
+      initialBalance
+    );
+
+    // 4. Handle successful system wallet creation.
+    log.info(
+      `System wallet created successfully: ${newSystemWallet.id} for service ${serviceId}`
+    );
+    res.status(201).json({
+      message: "System wallet created successfully for the service.",
+      wallet: newSystemWallet,
+    });
+    return;
+  } catch (error: any) {
+    // 5. Handle errors.
+    log.error("System wallet creation error occurred in controller:", error);
+
+    if (error instanceof ValidationError) {
+      if (error.message === "Service not found.") {
+        res.status(404).json({ message: error.message });
+      } else {
+        res.status(400).json({ message: error.message });
+      }
+      return;
+    }
+    res.status(500).json({
+      message: "An unexpected error occurred during system wallet creation.",
+    });
     return;
   }
 }

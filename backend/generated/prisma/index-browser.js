@@ -218,6 +218,7 @@ exports.UserRole = exports.$Enums.UserRole = {
 };
 
 exports.WalletType = exports.$Enums.WalletType = {
+  SYSTEM: 'SYSTEM',
   PERSONAL: 'PERSONAL',
   BUSINESS: 'BUSINESS',
   SAVINGS: 'SAVINGS'

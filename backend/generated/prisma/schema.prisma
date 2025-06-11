@@ -126,6 +126,7 @@ enum UserRole {
 }
 
 enum WalletType {
+  SYSTEM
   PERSONAL
   BUSINESS
   SAVINGS

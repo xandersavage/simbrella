@@ -1,7 +1,10 @@
-// Routes for transaction endpoints
 import { Router } from "express";
+import { getUserTransactionsController } from "../controllers/transactionController";
+import { authenticateUser } from "../middleware/auth";
+
 const router = Router();
 
-// TODO: Add transaction routes
+router.use(authenticateUser);
+router.get("/", getUserTransactionsController);
 
 export default router;
