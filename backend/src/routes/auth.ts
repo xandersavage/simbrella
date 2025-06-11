@@ -1,7 +1,12 @@
 // Routes for authentication endpoints (login, register, password reset, etc.)
 import { Router } from "express";
+import {
+  loginController,
+  signupController,
+} from "../controllers/authController";
 const router = Router();
 
-// TODO: Add auth routes
+router.post("/login", loginController);
+router.post("/signup", signupController);
 
 export default router;

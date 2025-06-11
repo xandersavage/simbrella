@@ -9,15 +9,14 @@ export interface User {
   lastName: string;
   phoneNumber?: string;
   role: UserRole;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 // Interface for the decoded JWT payload.
 export interface JwtPayload {
   id: string;
-  // I might add other properties here if they are part of the token's payload, e.g., role: User["role"];
 }
 
 // Augment the Express Request interface globally.
