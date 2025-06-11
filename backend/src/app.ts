@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import { errorHandler } from "./middleware/errorHandler";
+// import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/auth";
 import walletRoutes from "./routes/wallets";
 import transactionRoutes from "./routes/transactions";
@@ -26,6 +26,6 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Error handling
-app.use(errorHandler);
+// app.use(errorHandler);
 
 export default app;

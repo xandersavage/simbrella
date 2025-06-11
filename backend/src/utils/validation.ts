@@ -66,3 +66,9 @@ export const validatePassword = (password: string): boolean => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
+
+export const validatePhoneNumber = (phoneNumber: string): boolean => {
+  // Basic validation for Nigerian phone numbers
+  const phoneRegex = /^(?:\+234|0)([789]\d{9})$/;
+  return phoneRegex.test(phoneNumber);
+};

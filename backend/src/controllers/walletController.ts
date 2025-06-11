@@ -29,9 +29,10 @@ export async function transferController(req: Request, res: Response) {
       log.warn(
         "Authentication issue: User ID not found in request context for transfer attempt."
       );
-      return res
+      res
         .status(401)
         .json({ message: "Authentication required: User ID not found." });
+      return;
     }
     const userId: string = req.user.id;
 
@@ -42,12 +43,11 @@ export async function transferController(req: Request, res: Response) {
     log.info(
       `Money transfer successful: User ${userId} transferred ${amount} from ${fromWalletId} to ${toWalletId}.`
     );
-    return res
-      .status(200)
-      .json({
-        message: "Money transfer successful!",
-        data: { fromWalletId, toWalletId, amount, userId },
-      });
+    res.status(200).json({
+      message: "Money transfer successful!",
+      data: { fromWalletId, toWalletId, amount, userId },
+    });
+    return;
   } catch (error: any) {
     // 6. Handle errors using the logger and specific validation error handling
     log.error("Transfer error occurred in controller:", error);
@@ -55,17 +55,20 @@ export async function transferController(req: Request, res: Response) {
     // Handle Validation Errors specifically
     if (error instanceof ValidationError) {
       // For client-side validation errors, return 400 Bad Request
-      return res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
+      return;
     }
 
     if (error.message === "Insufficient balance in sender's wallet.") {
-      return res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
+      return;
     }
 
     // Generic error for any unexpected issues, return 500 Internal Server Error
-    return res.status(500).json({
+    res.status(500).json({
       message: "An unexpected internal server error occurred during transfer.",
       error: error.message,
     });
+    return;
   }
 }

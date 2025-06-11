@@ -1359,6 +1359,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     phoneNumber: string | null
+    password: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
     createdAt: Date | null
@@ -1371,6 +1372,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     phoneNumber: string | null
+    password: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
     createdAt: Date | null
@@ -1383,6 +1385,7 @@ export namespace Prisma {
     firstName: number
     lastName: number
     phoneNumber: number
+    password: number
     role: number
     isActive: number
     createdAt: number
@@ -1397,6 +1400,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     phoneNumber?: true
+    password?: true
     role?: true
     isActive?: true
     createdAt?: true
@@ -1409,6 +1413,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     phoneNumber?: true
+    password?: true
     role?: true
     isActive?: true
     createdAt?: true
@@ -1421,6 +1426,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     phoneNumber?: true
+    password?: true
     role?: true
     isActive?: true
     createdAt?: true
@@ -1506,6 +1512,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber: string | null
+    password: string
     role: $Enums.UserRole
     isActive: boolean
     createdAt: Date
@@ -1535,6 +1542,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     phoneNumber?: boolean
+    password?: boolean
     role?: boolean
     isActive?: boolean
     createdAt?: boolean
@@ -1551,6 +1559,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     phoneNumber?: boolean
+    password?: boolean
     role?: boolean
     isActive?: boolean
     createdAt?: boolean
@@ -1563,6 +1572,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     phoneNumber?: boolean
+    password?: boolean
     role?: boolean
     isActive?: boolean
     createdAt?: boolean
@@ -1575,13 +1585,14 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     phoneNumber?: boolean
+    password?: boolean
     role?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "firstName" | "lastName" | "phoneNumber" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "firstName" | "lastName" | "phoneNumber" | "password" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     wallets?: boolean | User$walletsArgs<ExtArgs>
     transactions?: boolean | User$transactionsArgs<ExtArgs>
@@ -1604,6 +1615,7 @@ export namespace Prisma {
       firstName: string
       lastName: string
       phoneNumber: string | null
+      password: string
       role: $Enums.UserRole
       isActive: boolean
       createdAt: Date
@@ -2039,6 +2051,7 @@ export namespace Prisma {
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly phoneNumber: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isActive: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
@@ -6213,6 +6226,7 @@ export namespace Prisma {
     firstName: 'firstName',
     lastName: 'lastName',
     phoneNumber: 'phoneNumber',
+    password: 'password',
     role: 'role',
     isActive: 'isActive',
     createdAt: 'createdAt',
@@ -6482,6 +6496,7 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     phoneNumber?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -6497,6 +6512,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
+    password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
@@ -6515,6 +6531,7 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     phoneNumber?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -6530,6 +6547,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     phoneNumber?: SortOrderInput | SortOrder
+    password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
@@ -6548,6 +6566,7 @@ export namespace Prisma {
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     phoneNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -6828,6 +6847,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -6843,6 +6863,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -6858,6 +6879,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6873,6 +6895,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6888,6 +6911,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -6900,6 +6924,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6912,6 +6937,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7294,6 +7320,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     phoneNumber?: SortOrder
+    password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
@@ -7306,6 +7333,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     phoneNumber?: SortOrder
+    password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
@@ -7318,6 +7346,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     phoneNumber?: SortOrder
+    password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
@@ -8672,6 +8701,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -8686,6 +8716,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -8832,6 +8863,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8846,6 +8878,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8908,6 +8941,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -8922,6 +8956,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -9046,6 +9081,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9060,6 +9096,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9168,6 +9205,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -9182,6 +9220,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     phoneNumber?: string | null
+    password: string
     role?: $Enums.UserRole
     isActive?: boolean
     createdAt?: Date | string
@@ -9284,6 +9323,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9298,6 +9338,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

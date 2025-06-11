@@ -2,7 +2,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../generated/prisma";
 import { JwtPayload, User } from "../types/auth";
 import { UserRole } from "../../generated/prisma";
 import { log } from "../utils/logger";
@@ -20,9 +20,10 @@ export const authenticateUser = async (
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     // Use logger for authentication failures
     log.warn("Authentication failed: No token provided or malformed header.");
-    return res.status(401).json({
+    res.status(401).json({
       message: "Authentication failed: No token provided or malformed header.",
     });
+    return;
   }
 
   const token = authHeader.split(" ")[1];
@@ -52,9 +53,10 @@ export const authenticateUser = async (
       log.warn(
         `Authentication failed: User with ID ${decoded.id} not found in database.`
       );
-      return res
+      res
         .status(401)
         .json({ message: "Authentication failed: User not found." });
+      return;
     }
 
     // 4. Attach the full User object to `req.user`
@@ -68,22 +70,25 @@ export const authenticateUser = async (
       log.warn("Authentication failed: Token has expired.", {
         error: error.message,
       });
-      return res
+      res
         .status(401)
         .json({ message: "Authentication failed: Token has expired." });
+      return;
     }
     if (error.name === "JsonWebTokenError") {
       log.warn("Authentication failed: Invalid token.", {
         error: error.message,
       });
-      return res
+      res
         .status(401)
         .json({ message: "Authentication failed: Invalid token." });
+      return;
     }
     log.error("An unexpected error occurred during authentication:", error);
-    return res
+    res
       .status(500)
       .json({ message: "An unexpected error occurred during authentication." });
+    return;
   }
 };
 
@@ -102,10 +107,11 @@ export const authorizeRoles = (allowedRoles: UserRole[]) => {
         "Authorization failed: User not authenticated or role missing from req.user.",
         { userId: req.user?.id }
       );
-      return res.status(401).json({
+      res.status(401).json({
         message:
           "Authorization failed: User not authenticated or role missing.",
       });
+      return;
     }
 
     const userRole: UserRole = req.user.role;
@@ -116,11 +122,12 @@ export const authorizeRoles = (allowedRoles: UserRole[]) => {
           req.user.id
         }. Role: ${userRole}. Required roles: ${allowedRoles.join(", ")}.`
       );
-      return res.status(403).json({
+      res.status(403).json({
         message: `Access forbidden: Required roles are ${allowedRoles.join(
           ", "
         )}. Your role is ${userRole}.`,
       });
+      return;
     }
 
     next();
