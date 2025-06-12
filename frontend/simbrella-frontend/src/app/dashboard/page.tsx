@@ -23,7 +23,6 @@ import {
   X,
   TrendingUp,
   Activity,
-  DollarSign,
   Zap,
   LogOut,
   Settings,
@@ -57,11 +56,14 @@ const getTransactionIcon = (type: string) => {
 
 // Helper function to get wallet icon based on type
 const getWalletIcon = (type: string) => {
-  return type === "BUSINESS" ? (
-    <Building2 className="h-5 w-5 text-blue-600" />
-  ) : (
-    <User className="h-5 w-5 text-indigo-600" />
-  );
+  switch (type) {
+    case "BUSINESS":
+      return <Building2 className="h-5 w-5 text-blue-600" />;
+    case "SAVINGS":
+      return <Wallet className="h-5 w-5 text-green-600" />;
+    default:
+      return <User className="h-5 w-5 text-indigo-600" />;
+  }
 };
 
 // Helper function to format dates for display
@@ -342,10 +344,13 @@ export default function DashboardPage() {
               <Card className="rounded-xl shadow-xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white border-0 transform transition-all duration-300 hover:scale-[1.02] cursor-pointer">
                 <CardContent className="p-6 flex flex-col justify-between h-full">
                   <div className="flex items-center justify-between mb-4">
+                    {" "}
                     <p className="text-indigo-100 text-sm font-medium uppercase tracking-wider">
                       Total Balance
                     </p>
-                    <DollarSign className="h-8 w-8 text-indigo-200 opacity-80" />
+                    <span className="text-2xl text-indigo-200 opacity-80">
+                      ₦
+                    </span>
                   </div>
                   {isWalletsLoading ? (
                     <div className="h-10 bg-indigo-400/50 rounded animate-pulse w-3/4"></div>

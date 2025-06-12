@@ -31,7 +31,7 @@ export function useUserWallets() {
   return useQuery<Wallet[], Error>({
     queryKey: ["userWallets"], // Unique key for this query
     queryFn: fetchUserWallets, // The function that fetches the data
-    staleTime: 1 * 60 * 1000, // Wallets might change more frequently, fresh for 1 minute
+    staleTime: 0, // Always revalidate when query is invalidated
     refetchOnWindowFocus: true,
     retry: 2,
   });
