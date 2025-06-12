@@ -6,12 +6,15 @@ import {
   servicePaymentController,
   createWalletController,
   fundWalletController,
+  getUserWalletsController,
 } from "../controllers/walletController";
 import { authenticateUser } from "../middleware/auth";
 
 const router = Router();
 
 router.use(authenticateUser);
+
+router.get("/", getUserWalletsController);
 
 router.post("/", createWalletController);
 router.post("/service-payment", servicePaymentController);

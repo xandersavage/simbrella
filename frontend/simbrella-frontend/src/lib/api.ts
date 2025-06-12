@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuthStore } from "@/store/authStore";
 
 // Get the base URL for backend API from environment variables.
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -15,7 +16,6 @@ const api = axios.create({
 // This is crucial for authenticated endpoints.
 api.interceptors.request.use(
   (config) => {
-    // Attempt to retrieve the token from localStorage.
     const token = localStorage.getItem("token");
 
     // If a token exists, attach it to the Authorization header.
@@ -29,8 +29,6 @@ api.interceptors.request.use(
   }
 );
 
-// Add a response interceptor to handle global error scenarios,
-// like 401 Unauthorized responses to automatically log the user out.
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -40,10 +38,13 @@ api.interceptors.response.use(
       console.error(
         "Unauthorized access. Token might be expired or invalid. Logging out..."
       );
-      // TODO: Handle logout logic here.
-      // Dispatch a logout action here (e.g., clear state, remove token, redirect to login)
+      // Get the logout function from Zustand store
+      const logout = useAuthStore.getState().logout;
+      // Clear the token and auth state
       localStorage.removeItem("token");
-      // window.location.href = '/auth/login'; // Redirect to login page
+      logout();
+      // Redirect to login page
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }

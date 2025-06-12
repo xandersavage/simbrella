@@ -14,9 +14,16 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL, // Allow requests from Next.js frontend
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed request headers
+    credentials: true, // Allow cookies, authorization headers, etc.
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);

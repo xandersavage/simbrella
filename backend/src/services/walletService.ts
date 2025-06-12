@@ -440,3 +440,30 @@ export async function fundWallet(
     );
   }
 }
+
+export async function getUserWallets(userId: string) {
+  // Basic validation for userId
+  if (!userId || typeof userId !== "string" || userId.trim().length === 0) {
+    log.warn("Wallet retrieval failed: Invalid userId provided.");
+    throw new ValidationError("User ID must be a non-empty string.");
+  }
+
+  const wallets = await prisma.wallet.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      name: true,
+      type: true,
+      balance: true,
+      currency: true,
+      isActive: true,
+      userId: true,
+      serviceId: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  log.info(`Retrieved ${wallets.length} wallets for user ${userId}.`);
+  return wallets;
+}

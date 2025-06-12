@@ -12,12 +12,14 @@ import { CustomFormField } from "@/components/forms/AuthFormFields";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
+import { useAuthStore } from "@/store/authStore";
 
 export function LoginForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -34,9 +36,11 @@ export function LoginForm() {
 
     try {
       const response = await api.post("/auth/login", values);
+      console.log("Login response:", response.data);
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
+        setAuth(response.data.user, response.data.token);
         setSuccessMessage("Login successful! Redirecting to dashboard...");
         console.log("Login successful:", response.data);
         router.push("/dashboard");

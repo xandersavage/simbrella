@@ -3,6 +3,7 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/authService";
 import { log } from "../utils/logger";
+import { User } from "../../generated/prisma";
 import {
   validateEmail,
   validatePassword,
@@ -147,5 +148,51 @@ export async function loginController(req: Request, res: Response) {
       });
       return;
     }
+  }
+}
+
+export async function getMeController(req: Request, res: Response) {
+  try {
+    // The authenticateUser middleware should have already fetched the user
+    // from the database and attached it to req.user.
+    const user = req.user;
+
+    // Sanity check: Ensure user object is present (should be, if middleware ran)
+    if (!user) {
+      log.error(
+        "getMeController: req.user was not populated by authentication middleware."
+      );
+      res
+        .status(500)
+        .json({ message: "User data not available. Internal server error." });
+      return;
+    }
+    const userResponse: User = {
+      id: user.id,
+      email: user.email,
+      password: "", // Never expose the real password!
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber ?? null,
+      role: user.role,
+      isActive: user.isActive ?? false,
+      createdAt: user.createdAt ?? new Date(0),
+      updatedAt: user.updatedAt ?? new Date(0),
+    };
+
+    log.info(`User profile requested for ${user.email} (ID: ${user.id}).`);
+    res.status(200).json({
+      message: "User profile retrieved successfully.",
+      user: userResponse,
+    });
+    return;
+  } catch (error: any) {
+    log.error("Error retrieving user profile in getMeController:", error);
+    res
+      .status(500)
+      .json({
+        message: "An unexpected error occurred while retrieving user profile.",
+      });
+    return;
   }
 }

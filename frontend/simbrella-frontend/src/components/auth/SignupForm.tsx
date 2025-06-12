@@ -13,12 +13,14 @@ import { CustomFormField } from "@/components/forms/AuthFormFields";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
+import { useAuthStore } from "@/store/authStore";
 
 export function SignupForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
@@ -38,12 +40,11 @@ export function SignupForm() {
     setSuccessMessage(null);
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { passwordConfirm, ...dataToSend } = values;
-      const response = await api.post("/auth/signup", dataToSend);
+      const response = await api.post("/auth/signup", values);
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
+        setAuth(response.data.user, response.data.token);
         setSuccessMessage(
           "Account created successfully! Redirecting to dashboard..."
         );

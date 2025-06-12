@@ -4,7 +4,11 @@ import { Request, Response } from "express";
 import { transferMoney } from "../services/walletService";
 import { log } from "../utils/logger";
 import { validateTransferInput, ValidationError } from "../utils/validation";
-import { processServicePayment, fundWallet } from "../services/walletService";
+import {
+  processServicePayment,
+  fundWallet,
+  getUserWallets,
+} from "../services/walletService";
 import { WalletType } from "../../generated/prisma";
 import { createUserWallet } from "../services/walletService";
 
@@ -251,6 +255,45 @@ export async function fundWalletController(req: Request, res: Response) {
     }
     res.status(500).json({
       message: "An unexpected error occurred during wallet funding.",
+      error: error.message,
+    });
+    return;
+  }
+}
+
+export async function getUserWalletsController(req: Request, res: Response) {
+  try {
+    if (!req.user || !req.user.id) {
+      log.warn(
+        "Wallet retrieval failed: User ID not found in request context."
+      );
+      res
+        .status(401)
+        .json({ message: "Authentication required: User ID not found." });
+      return;
+    }
+    const userId = req.user.id;
+
+    // 2. Call the getUserWallets service function.
+    const wallets = await getUserWallets(userId);
+
+    // 3. Handle successful retrieval.
+    log.info(`Retrieved ${wallets.length} wallets for user ${userId}.`);
+    res.status(200).json({
+      message: "User wallets retrieved successfully.",
+      wallets: wallets,
+    });
+    return;
+  } catch (error: any) {
+    // 4. Handle errors.
+    log.error("Error retrieving user wallets in controller:", error);
+
+    if (error instanceof ValidationError) {
+      res.status(400).json({ message: error.message });
+      return;
+    }
+    res.status(500).json({
+      message: "An unexpected error occurred during wallet retrieval.",
       error: error.message,
     });
     return;
