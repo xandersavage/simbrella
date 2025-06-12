@@ -1,10 +1,6 @@
 import { create } from "zustand";
 import api from "@/lib/api";
 
-// Think of AuthUser as a blueprint for what a logged-in user's information
-// should look like in our app's memory.
-// It's like a checklist: "A user object MUST have an id, email, firstName, lastName..."
-// And it CAN OPTIONALLY have a phoneNumber or role.
 interface AuthUser {
   id: string;
   email: string;
@@ -25,8 +21,6 @@ interface AuthState {
   isLoading: boolean; // `true` if we're busy checking login status (e.g., when the app first starts).
   error: string | null; // If something goes wrong with login, we can store an error message here.
 
-  // These are the "actions" - functions that allow us to change the information on the whiteboard.
-  // They are like instructions for how to update the state.
   setAuth: (user: AuthUser, token: string) => void; // Instruction: "Set this user and token as logged in."
   logout: () => void; // Instruction: "Clear all login info; log out the user."
   setLoading: (loading: boolean) => void; // Instruction: "Change the loading status."
@@ -34,12 +28,8 @@ interface AuthState {
   initializeAuth: () => void; // Instruction: "Check if we were already logged in (from previous visits)."
 }
 
-// Now we actually create the Zustand store (our whiteboard)!
-// `create<AuthState>` means "create a whiteboard that follows the AuthState blueprint."
-// `(set, get)` are special functions that Zustand gives us to update (`set`) or read (`get`) from the whiteboard.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useAuthStore = create<AuthState>((set, get) => ({
-  // These are the STARTING values on our whiteboard when the app first loads.
   user: null, // No user initially
   token: null, // No token initially
   isAuthenticated: false, // Not authenticated initially
@@ -116,7 +106,3 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 }));
-
-// This comment is a reminder that `initializeAuth` needs to be run when your app starts up
-// but it needs to be inside a React component (like your main layout file)
-// because `localStorage` only exists in the browser, not when Next.js builds pages on the server.
