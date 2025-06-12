@@ -155,4 +155,24 @@ export async function fundWallet(params: {
   return response.data;
 }
 
+export async function transferMoney({
+  fromWalletId,
+  toWalletId,
+  amount,
+  description,
+}: {
+  fromWalletId: string;
+  toWalletId: string;
+  amount: number;
+  description: string;
+}): Promise<{ message: string }> {
+  const response = await api.post("/wallets/transfer", {
+    fromWalletId,
+    toWalletId,
+    amount,
+    description,
+  });
+  return response.data;
+}
+
 // You can add more API service functions here as needed (e.g., for creating wallets, funding, etc.)

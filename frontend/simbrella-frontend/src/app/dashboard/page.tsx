@@ -42,6 +42,7 @@ import { useAuthStore } from "@/store/authStore";
 import { CreateWalletDialog } from "@/components/wallets/CreateWalletDialog";
 import { PayServiceDialog } from "@/components/wallets/PayServiceDialog";
 import { FundWalletDialog } from "@/components/wallets/FundWalletDialog";
+import { TransferMoneyDialog } from "@/components/wallets/TransferMoneyDialog";
 
 // Helper function to get transaction icon based on type
 const getTransactionIcon = (type: string) => {
@@ -653,12 +654,22 @@ export default function DashboardPage() {
                         <span>Fund Wallet</span>
                       </Button>
                     </FundWalletDialog>
-                    <Link href="/wallets/transfer">
+                    <TransferMoneyDialog
+                      userWallets={userWallets || []}
+                      onSuccess={() => {
+                        toast({
+                          title: "Transfer Successful",
+                          description:
+                            "Your money has been transferred successfully.",
+                          variant: "default",
+                        });
+                      }}
+                    >
                       <Button className="w-full h-20 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-semibold flex flex-col items-center justify-center space-y-1 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.03]">
                         <Send className="h-6 w-6" />
                         <span>Transfer Money</span>
                       </Button>
-                    </Link>
+                    </TransferMoneyDialog>
                     <PayServiceDialog
                       userWallets={userWallets || []}
                       onSuccess={() => {
