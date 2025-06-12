@@ -5,9 +5,12 @@ import {
   fetchUserProfile,
   fetchUserWallets,
   fetchUserTransactions,
+  fetchServiceWallets,
+  fetchServices,
   UserProfile,
   Wallet,
   Transaction,
+  Service,
 } from "@/services/dataService"; //API service functions and types
 
 // --- Custom React Query Hooks ---
@@ -42,6 +45,26 @@ export function useUserTransactions() {
     queryKey: ["userTransactions"], // Unique key for this query
     queryFn: fetchUserTransactions, // The function that fetches the data
     staleTime: 30 * 1000, // Transactions can be very dynamic, fresh for 30 seconds
+    refetchOnWindowFocus: true,
+    retry: 2,
+  });
+}
+
+export function useServiceWallets() {
+  return useQuery<Wallet[], Error>({
+    queryKey: ["serviceWallets"],
+    queryFn: fetchServiceWallets,
+    staleTime: 1 * 60 * 1000, // Service wallets refresh every minute
+    refetchOnWindowFocus: true,
+    retry: 2,
+  });
+}
+
+export function useServices() {
+  return useQuery<Service[], Error>({
+    queryKey: ["services"],
+    queryFn: fetchServices,
+    staleTime: 5 * 60 * 1000, // Services data is relatively static, refresh every 5 minutes
     refetchOnWindowFocus: true,
     retry: 2,
   });

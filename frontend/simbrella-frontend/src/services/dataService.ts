@@ -28,6 +28,16 @@ export interface Wallet {
   updatedAt: string;
 }
 
+export interface Service {
+  id: string;
+  name: string;
+  type: "AIRTIME" | "DATA" | "ELECTRICITY" | "WATER" | "CABLE_TV";
+  description?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Transaction {
   id: string;
   type: string;
@@ -55,6 +65,22 @@ export interface Transaction {
   };
 }
 
+export interface PayServiceParams {
+  fromWalletId: string;
+  toWalletId: string;
+  amount: number;
+}
+
+export interface PayServiceResponse {
+  message: string;
+  data: {
+    fromWalletId: string;
+    toWalletId: string;
+    amount: number;
+    userId: string;
+  };
+}
+
 export async function fetchUserProfile(): Promise<UserProfile> {
   // Specify the expected response structure: an object with a 'user' key
   const response = await api.get<{ message: string; user: UserProfile }>(
@@ -78,6 +104,55 @@ export async function fetchUserTransactions(): Promise<Transaction[]> {
   }>("/transactions");
 
   return response.data.transactions; // Access the 'transactions' array from the response
+}
+
+export async function payService(
+  params: PayServiceParams
+): Promise<PayServiceResponse> {
+  const response = await api.post<PayServiceResponse>(
+    "/wallets/service-payment",
+    params
+  );
+  return response.data;
+}
+
+export async function fetchServiceWallets(): Promise<Wallet[]> {
+  const response = await api.get<{ message: string; wallets: Wallet[] }>(
+    "/wallets"
+  );
+  return response.data.wallets;
+}
+
+export async function fetchServices(): Promise<Service[]> {
+  const response = await api.get<{ message: string; services: Service[] }>(
+    "/services"
+  );
+  return response.data.services;
+}
+
+export async function fundWallet(params: {
+  walletId: string;
+  amount: number;
+  externalReference: string;
+}): Promise<{
+  message: string;
+  data: {
+    walletId: string;
+    amount: number;
+    externalReference: string;
+    userId: string;
+  };
+}> {
+  const response = await api.post<{
+    message: string;
+    data: {
+      walletId: string;
+      amount: number;
+      externalReference: string;
+      userId: string;
+    };
+  }>("/wallets/fund", params);
+  return response.data;
 }
 
 // You can add more API service functions here as needed (e.g., for creating wallets, funding, etc.)

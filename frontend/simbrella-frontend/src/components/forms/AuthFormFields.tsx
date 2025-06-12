@@ -70,18 +70,3 @@ export function CustomFormField<TFormSchema extends FieldValues>({
     />
   );
 }
-
-// You might also want to add a generic submit button if it's common across forms
-// import { Button } from "@/components/ui/button";
-// interface SubmitButtonProps {
-//   loading: boolean;
-//   buttonText: string;
-//   loadingText?: string;
-// }
-// export function SubmitButton({ loading, buttonText, loadingText = "Submitting..." }: SubmitButtonProps) {
-//   return (
-//     <Button type="submit" className="w-full rounded-md" disabled={loading}>
-//       {loading ? loadingText : buttonText}
-//     </Button>
-//   );
-// }

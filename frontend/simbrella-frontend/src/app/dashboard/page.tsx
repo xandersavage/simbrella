@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Wallet,
   CreditCard,
@@ -39,6 +40,8 @@ import {
 // Import your Zustand auth store
 import { useAuthStore } from "@/store/authStore";
 import { CreateWalletDialog } from "@/components/wallets/CreateWalletDialog";
+import { PayServiceDialog } from "@/components/wallets/PayServiceDialog";
+import { FundWalletDialog } from "@/components/wallets/FundWalletDialog";
 
 // Helper function to get transaction icon based on type
 const getTransactionIcon = (type: string) => {
@@ -93,6 +96,7 @@ const formatDate = (dateString: string) => {
 export default function DashboardPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { toast } = useToast();
 
   // Get authentication state from Zustand store
   const {
@@ -428,7 +432,17 @@ export default function DashboardPage() {
                     <CardTitle className="text-xl font-semibold text-slate-900 dark:text-white">
                       My Wallets
                     </CardTitle>
-                    <CreateWalletDialog />
+                    <div className="flex items-center space-x-3">
+                      <CreateWalletDialog />
+                      <FundWalletDialog
+                        userWallets={userWallets || []}
+                        onSuccess={() => {}}
+                      />
+                      <PayServiceDialog
+                        userWallets={userWallets || []}
+                        onSuccess={() => {}}
+                      />
+                    </div>
                   </CardHeader>
                   <CardContent className="space-y-3 pt-2">
                     {isWalletsLoading ? (
@@ -623,24 +637,44 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    <Link href="/wallets/fund">
+                    <FundWalletDialog
+                      userWallets={userWallets || []}
+                      onSuccess={() => {
+                        toast({
+                          title: "Wallet Funded",
+                          description:
+                            "Your wallet has been funded successfully.",
+                          variant: "default",
+                        });
+                      }}
+                    >
                       <Button className="w-full h-20 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 text-white font-semibold flex flex-col items-center justify-center space-y-1 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.03]">
                         <ArrowDownLeft className="h-6 w-6" />
                         <span>Fund Wallet</span>
                       </Button>
-                    </Link>
+                    </FundWalletDialog>
                     <Link href="/wallets/transfer">
                       <Button className="w-full h-20 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-semibold flex flex-col items-center justify-center space-y-1 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.03]">
                         <Send className="h-6 w-6" />
                         <span>Transfer Money</span>
                       </Button>
                     </Link>
-                    <Link href="/services/pay">
+                    <PayServiceDialog
+                      userWallets={userWallets || []}
+                      onSuccess={() => {
+                        toast({
+                          title: "Payment Successful",
+                          description:
+                            "Your service payment has been processed.",
+                          variant: "default",
+                        });
+                      }}
+                    >
                       <Button className="w-full h-20 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white font-semibold flex flex-col items-center justify-center space-y-1 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.03]">
                         <CreditCard className="h-6 w-6" />
                         <span>Pay for Service</span>
                       </Button>
-                    </Link>
+                    </PayServiceDialog>
                     <Link href="/reports">
                       <Button className="w-full h-20 bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-700 dark:hover:bg-yellow-600 text-white font-semibold flex flex-col items-center justify-center space-y-1 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.03]">
                         <Activity className="h-6 w-6" />

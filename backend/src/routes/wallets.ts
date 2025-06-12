@@ -18,7 +18,7 @@ router.get("/", getUserWalletsController);
 
 router.post("/", createWalletController);
 router.post("/service-payment", servicePaymentController);
-router.post("/pay-service", transferController);
+router.post("/transfer", transferController);
 router.post("/fund", fundWalletController);
 
 export default router;
