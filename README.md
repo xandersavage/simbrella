@@ -91,7 +91,6 @@ npm run dev
 
 - [API Documentation](docs/API.md)
 - [Architecture Decisions](docs/TECH_DECISIONS.md)
-- [Development Guide](docs/DEVELOPMENT.md)
 
 ## 🧪 Testing
 
